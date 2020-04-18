@@ -56,7 +56,6 @@ class WeatherViewModel : ViewModel() {
                     _city.value = "${response.body()?.name}"
 
 
-
                     val feelvalue = response.body()?.mainpart?.feels_like;
                     val feelvalueF = (9.0 / 5 * (feelvalue?.minus(273)!!) + 32);
                     val feelvalueD = dec.format(feelvalueF);
@@ -66,7 +65,27 @@ class WeatherViewModel : ViewModel() {
                     pressure.value = "Pressure ${response.body()?.mainpart?.pressure} hPa";
                     humidity.value = "Humidity \n ${response.body()?.mainpart?.humidity} %";
 
+                    /* sunrise.value = "Sunrise ${java.time.format.DateTimeFormatter.ISO_INSTANT
+                        .format(response.body()?.sys?.sunrise?.let {
+                            java.time.Instant.ofEpochSecond(
+                                it
+                            )
+                        })
+                    }";*/
+                    sunrise.value = "Sunrise \n ${SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(
+                        response.body()?.sys?.sunrise?.times(1000)?.let {
+                            Date(
+                                it
+                            )
+                        })}";
 
+                    //sunset.value = "Sunset ${response.body()?.sys?.sunset}";
+                    sunset.value = "Sunset \n ${SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(
+                        response.body()?.sys?.sunset?.times(1000)?.let {
+                            Date(
+                                it
+                            )
+                        })}";
 
 
                     //_response.value = "Success: ${response.body()?.name} city is retrieved; Temperature: ${response.body()?.mainpart?.temp}; Humidity: ${response.body()?.mainpart?.humidity}"
