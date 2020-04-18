@@ -55,6 +55,23 @@ class WeatherViewModel : ViewModel() {
                     icon.value = "${response.body()?.weather?.get(0)?.icon}";
                     _city.value = "${response.body()?.name}"
 
+                    val tempvalue = response.body()?.mainpart?.temp;
+                    val tempvalueF = (9.0 / 5 * (tempvalue?.minus(273)!!) + 32);
+                    val tempvalueD = dec.format(tempvalueF);
+                    _temp.value = "$tempvalueD °F";
+
+                    val minvalue = response.body()?.mainpart?.temp_min;
+                    val minvalueF = (9.0 / 5 * (minvalue?.minus(273)!!) + 32);
+                    val minvalueD = dec.format(minvalueF);
+
+                    val maxvalue = response.body()?.mainpart?.temp_max;
+                    val maxvalueF = (9.0 / 5 * (maxvalue?.minus(273)!!) + 32);
+                    val maxvalueD = dec.format(maxvalueF);
+                    minmaxTemp.value = "Min Temp $minvalueD °F               Max Temp $maxvalueD °F";
+                    /*mintemp.value = "Min Temp ${response.body()?.mainpart?.temp_min}°C";
+                    maxtemp.value = "Max Temp ${response.body()?.mainpart?.temp_max}°C";*/
+
+
 
                     val feelvalue = response.body()?.mainpart?.feels_like;
                     val feelvalueF = (9.0 / 5 * (feelvalue?.minus(273)!!) + 32);
